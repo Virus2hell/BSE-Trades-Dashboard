@@ -1,0 +1,18 @@
+{
+  "name": "bse-trades-dashboard",
+  "version": "1.0.0",
+  "description": "Mock BSE trades API (async 15-min pull) + live trades dashboard that never holds an HTTP connection open longer than 30 seconds.",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=18.17"
+  },
+  "scripts": {
+    "start": "node scripts/start-all.js",
+    "demo": "node scripts/start-all.js --demo",
+    "start:bse": "node bse-mock/server.js",
+    "start:dashboard": "node dashboard/server.js",
+    "test": "node --test test/store.test.js test/e2e.test.js"
+  },
+  "license": "MIT"
+}

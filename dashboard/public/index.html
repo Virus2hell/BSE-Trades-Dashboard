@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BSE Trades Dashboard</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">◆</span>
+      <div>
+        <h1>BSE Trades</h1>
+        <p class="sub">Live trade book · pulled from BSE Exchange API</p>
+      </div>
+    </div>
+    <div class="conn" id="conn" data-state="connecting" title="Push channel status">
+      <span class="dot"></span><span id="connText">Connecting…</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="cards">
+      <div class="card"><span class="label">Trades</span><span class="value" id="statTrades">–</span></div>
+      <div class="card"><span class="label">Turnover</span><span class="value" id="statTurnover">–</span></div>
+      <div class="card"><span class="label">Clients</span><span class="value" id="statClients">–</span></div>
+      <div class="card"><span class="label">Last pull completed</span><span class="value small" id="statLastPull">–</span></div>
+    </section>
+
+    <section class="pull" id="pullPanel">
+      <div class="pull-info">
+        <div class="pull-title">
+          <span class="badge" id="pullBadge">IDLE</span>
+          <strong id="pullHeadline">No pull in progress</strong>
+        </div>
+        <div class="pull-detail" id="pullDetail">Showing everything pulled so far. Start a pull to fetch the latest trades from BSE.</div>
+        <div class="progress" id="pullProgress" hidden><div class="bar" id="pullBar"></div></div>
+      </div>
+      <button id="pullBtn" class="btn">Pull from BSE</button>
+    </section>
+
+    <section class="table-wrap">
+      <div class="toolbar">
+        <input id="search" type="search" placeholder="Search trade ID, client or symbol…" autocomplete="off" />
+        <select id="sideFilter">
+          <option value="">All sides</option>
+          <option value="BUY">Buy</option>
+          <option value="SELL">Sell</option>
+        </select>
+        <span class="count" id="resultCount"></span>
+      </div>
+      <div class="scroll">
+        <table>
+          <thead>
+            <tr>
+              <th data-key="tradeId">Trade ID</th>
+              <th data-key="client">Client</th>
+              <th data-key="symbol">Symbol</th>
+              <th data-key="side">Side</th>
+              <th data-key="quantity" class="num">Qty</th>
+              <th data-key="price" class="num">Price (₹)</th>
+              <th data-key="value" class="num">Value (₹)</th>
+              <th data-key="timestamp">Trade time</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <div class="empty" id="empty" hidden>No trades yet — click <b>Pull from BSE</b> to fetch them.</div>
+      </div>
+      <div class="pager">
+        <button class="btn ghost" id="prev">‹ Prev</button>
+        <span id="pageInfo"></span>
+        <button class="btn ghost" id="next">Next ›</button>
+      </div>
+    </section>
+
+    <section class="history">
+      <h2>Pull history</h2>
+      <ul id="history"></ul>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" hidden></div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

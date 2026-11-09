@@ -1,0 +1,29 @@
+services:
+  bse-mock:
+    build: .
+    command: ["node", "bse-mock/server.js"]
+    environment:
+      BSE_PORT: "4000"
+      PULL_DELAY_MS: "${PULL_DELAY_MS:-900000}"
+      WEBHOOK_SECRET: "${WEBHOOK_SECRET:-change-me-in-prod}"
+    ports:
+      - "4000:4000"
+
+  dashboard:
+    build: .
+    command: ["node", "dashboard/server.js"]
+    environment:
+      DASHBOARD_PORT: "3000"
+      BSE_BASE_URL: "http://bse-mock:4000"
+      DASHBOARD_PUBLIC_URL: "http://dashboard:3000"
+      WEBHOOK_SECRET: "${WEBHOOK_SECRET:-change-me-in-prod}"
+      DATA_FILE: "/data/store.json"
+    volumes:
+      - trades-data:/data
+    ports:
+      - "3000:3000"
+    depends_on:
+      - bse-mock
+
+volumes:
+  trades-data:
